@@ -1,5 +1,6 @@
 import React from 'react';
 import { Alert } from 'react-bootstrap';
+import { Row, Col, FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
 
 export const NotFound = () => (
   <Alert bsStyle="danger">

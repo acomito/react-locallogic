@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from 'react-bootstrap';
+/*import { Grid } from 'react-bootstrap';*/
 import AppNavigation from '../containers/app-navigation';
 
 export const App = React.createClass({
@@ -7,11 +7,6 @@ export const App = React.createClass({
     children: React.PropTypes.element.isRequired,
   },
   render() {
-    return <div>
-      <AppNavigation />
-      <Grid>
-        { this.props.children }
-      </Grid>
-    </div>;
-  },
+    return <div> <AppNavigation /> { this.props.children } </div>;
+  }
 });

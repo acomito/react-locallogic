@@ -1,11 +1,28 @@
 import React from 'react';
-import { Jumbotron } from 'react-bootstrap';
+import RaisedButton from 'material-ui/RaisedButton';
+
+const styles = {
+  mainPage: {
+    background: "#009688",
+    color: "#ffffff",
+    paddingTop: "80px",
+    paddingBottom: "80px",
+  },
+  landingHeader: {
+  	  fontWeight: "100",
+  	  marginBottom: "32px",
+  	  fontSize: "33px",
+  },
+  landingSubHeader: {
+  	  marginBottom: "30px",
+  	  fontSize: "16px",
+  	  fontWeight: "200",
+  }
+}
 
 export const Index = () => (
-  <Jumbotron className="text-center">
-    <h2>Base</h2>
-    <p>A starting point for Meteor applications.</p>
-    <p><a className="btn btn-success" href="https://themeteorchef.com/base" role="button">Read the Documentation</a></p>
-    <p style={ { fontSize: '16px', color: '#aaa' } }>Currently at v4.4.0</p>
-  </Jumbotron>
+  <div className="text-center" style={styles.mainPage}>
+    <h2 style={styles.landingHeader}>Local Procurement Search</h2>
+    <p style={styles.landingSubHeader}>Search for local procurement opportunities at hospitals, universities and non-profits.</p>
+  </div>
 );

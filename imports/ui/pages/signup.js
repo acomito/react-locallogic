@@ -1,68 +1,84 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { Row, Col, FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
 import { handleSignup } from '../../modules/signup';
+import TextField from 'material-ui/TextField';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
+import { Row, Col, FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
+
+
+const styles = {
+  cardStyles: {
+    width: "50%",
+    padding: "40px",
+    margin: "60px auto",
+    textAlign: "center"
+  },
+  inputStyles: {
+    display: "block",
+    margin: "20px auto",
+    width: "60%"
+  }
+}
 
 export class Signup extends React.Component {
-  componentDidMount() {
-    handleSignup({ component: this });
+
+  constructor(props) {
+    super(props);
+    this.state = {
+          emailAddress: '',
+          password: '',
+        }
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
+  _onButtonClick(){
+    let email = this.state.emailAddress;
+    let password = this.state.password;
+    handleSignup(email, password);
+  }
+
+    _handleEmailChange(event) {
+    let thisValue = event.target.value;
+    if (thisValue.length === undefined){ return;}
+    this.setState({
+            emailAddress: thisValue
+        });
+  }
+
+  _handlePasswprdChange(event) {
+    let thisValue = event.target.value;
+    if (thisValue.length === undefined){ return;}
+    this.setState({
+          password: thisValue
+      });
   }
 
   render() {
-    return <Row>
-      <Col xs={ 12 } sm={ 6 } md={ 4 }>
-        <h4 className="page-header">Sign Up</h4>
-        <form ref="signup" className="signup" onSubmit={ this.handleSubmit }>
-          <Row>
-            <Col xs={ 6 } sm={ 6 }>
-              <FormGroup>
-                <ControlLabel>First Name</ControlLabel>
-                <FormControl
-                  type="text"
-                  ref="firstName"
-                  name="firstName"
-                  placeholder="First Name"
-                />
-              </FormGroup>
-            </Col>
-            <Col xs={ 6 } sm={ 6 }>
-              <FormGroup>
-                <ControlLabel>Last Name</ControlLabel>
-                <FormControl
-                  type="text"
-                  ref="lastName"
-                  name="lastName"
-                  placeholder="Last Name"
-                />
-              </FormGroup>
-            </Col>
-          </Row>
-          <FormGroup>
-            <ControlLabel>Email Address</ControlLabel>
-            <FormControl
+    return <Card style={styles.cardStyles}  >
+            <CardHeader title="Sign Up"  />
+            <TextField
               type="text"
               ref="emailAddress"
               name="emailAddress"
-              placeholder="Email Address"
+              floatingLabelText="Email Address"
+              value={this.state.emailAddress} 
+              onChange={this._handleEmailChange.bind(this)}
+              style={styles.inputStyles}
             />
-          </FormGroup>
-          <FormGroup>
-            <ControlLabel>Password</ControlLabel>
-            <FormControl
+            <TextField
               type="password"
               ref="password"
               name="password"
-              placeholder="Password"
+              floatingLabelText="Password"
+              value={this.state.password} 
+              onChange={this._handlePasswprdChange.bind(this)}
+              style={styles.inputStyles}
             />
-          </FormGroup>
-          <Button type="submit" bsStyle="success">Sign Up</Button>
-        </form>
-        <p>Already have an account? <Link to="/login">Log In</Link>.</p>
-      </Col>
-    </Row>;
+            <CardActions>
+              <RaisedButton type="submit" label="Sign Up"  onClick={this._onButtonClick.bind(this)} primary={true}/>
+              <p>Already have an account? <Link to="/login">Log In</Link>.</p>
+            </CardActions>
+    </Card>;
   }
 }

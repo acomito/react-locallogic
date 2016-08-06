@@ -6,9 +6,9 @@ import { getInputValue } from './get-input-value';
 
 let component;
 
-const handleRecovery = () => {
+const handleRecovery = (email) => {
   Accounts.forgotPassword({
-    email: getInputValue(component.refs.emailAddress),
+    email: email,
   }, (error) => {
     if (error) {
       Bert.alert(error.reason, 'warning');
@@ -18,7 +18,7 @@ const handleRecovery = () => {
   });
 };
 
-const validate = () => {
+/*const validate = () => {
   $(component.refs.recoverPassword).validate({
     rules: {
       emailAddress: {
@@ -34,9 +34,8 @@ const validate = () => {
     },
     submitHandler() { handleRecovery(); },
   });
-};
+};*/
 
-export const handleRecoverPassword = (options) => {
-  component = options.component;
-  validate();
+export const handleRecoverPassword = (email) => {
+  handleRecovery(email);
 };

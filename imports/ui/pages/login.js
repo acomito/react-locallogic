@@ -2,45 +2,99 @@ import React from 'react';
 import { Link } from 'react-router';
 import { Row, Col, FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
 import { handleLogin } from '../../modules/login';
+import TextField from 'material-ui/TextField';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 
-export class Login extends React.Component {
-  componentDidMount() {
-    handleLogin({ component: this });
+
+
+  const styles = {
+    card: {
+      "width": "40%",
+      "margin": "auto",
+      "marginTop": "40px",
+      "padding": "20px",
+      textAlign: "center",
+    },
+    cardTitle: {
+      textAlign: "center",
+      fontSize: "35px",
+      color: "grey",
+      margin: "auto"
+    },
+    textField: {
+      display: "block",
+      width: "70%",
+      margin: "auto",
+      background: "#ffffff",
+      backgroundColor: "#ffffff",
+      marginBottom: "20px",
+    },
+    cardActionStyles: {
+      margin: "auto"
+    }
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
+export class Login extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+          emailAddress: '',
+          password: '',
+        }
+  }
+
+  _onButtonClick(){
+    let email = this.state.emailAddress;
+    let password = this.state.password;
+    handleLogin(email, password);
+  }
+
+  _handleEmailChange(event) {
+    let thisValue = event.target.value;
+    if (thisValue.length === undefined){ return;}
+    this.setState({
+            emailAddress: thisValue
+        });
+  }
+
+  _handlePasswprdChange(event) {
+    let thisValue = event.target.value;
+    if (thisValue.length === undefined){ return;}
+    this.setState({
+          password: thisValue
+      });
   }
 
   render() {
-    return <Row>
-      <Col xs={ 12 } sm={ 6 } md={ 4 }>
-        <h4 className="page-header">Login</h4>
-        <form ref="login" className="login" onSubmit={ this.handleSubmit }>
-          <FormGroup>
-            <ControlLabel>Email Address</ControlLabel>
-            <FormControl
+    return <Card style={styles.card}>
+        <CardHeader titleStyle={styles.cardTitle} title="Login"/>
+            <TextField
+              floatingLabelText="Email Address"
+              style={styles.textField}
               type="email"
               ref="emailAddress"
               name="emailAddress"
-              placeholder="Email Address"
-            />
-          </FormGroup>
-          <FormGroup>
-            <ControlLabel>
-              <span className="pull-left">Password</span>
-              <Link className="pull-right" to="/recover-password">Forgot Password?</Link>
-            </ControlLabel>
-            <FormControl
+              hintText="Email Address"
+              value={this.state.emailAddress} 
+              onChange={this._handleEmailChange.bind(this)}
+            />   
+            <TextField
+              floatingLabelText="Password"
+              style={styles.textField}
               type="password"
               ref="password"
               name="password"
-              placeholder="Password"
+              hintText="Password"
+              value={this.state.password} 
+              onChange={this._handlePasswprdChange.bind(this)}
             />
-          </FormGroup>
-          <Button type="submit" bsStyle="success">Login</Button>
-        </form>
-      </Col>
-    </Row>;
+          <CardActions style={styles.cardActionStyles}>
+            <RaisedButton primary={true} type="submit" label="Login" onClick={this._onButtonClick.bind(this)} />
+            <Link to="/recover-password"><FlatButton label="Forgot Password?" /></Link>
+          </CardActions>
+    </Card>;
   }
 }

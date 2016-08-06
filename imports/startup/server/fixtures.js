@@ -8,7 +8,7 @@ const users = [{
   profile: {
     name: { first: 'Carl', last: 'Winslow' },
   },
-  roles: ['admin'],
+  roles: ['admin','superAdmin'],
 }];
 
 users.forEach(({ email, password, profile, roles }) => {
@@ -16,6 +16,7 @@ users.forEach(({ email, password, profile, roles }) => {
 
   if (!userExists) {
     const userId = Accounts.createUser({ email, password, profile });
-    Roles.addUsersToRoles(userId, roles);
+    Roles.addUsersToRoles(userId, roles[0]);
+    Roles.addUsersToRoles(userId, roles[1]);
   }
 });
